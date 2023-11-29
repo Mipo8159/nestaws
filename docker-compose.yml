@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run start:dev
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5000:5000
+
+  postgres:
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Monolith8159
+      POSTGRES_DB: nestaws
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - 5436:5432
